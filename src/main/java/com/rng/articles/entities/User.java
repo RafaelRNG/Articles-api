@@ -2,6 +2,7 @@ package com.rng.articles.entities;
 
 import com.rng.articles.entities.enums.ContactRule;
 import com.rng.articles.entities.enums.UserRole;
+import com.rng.articles.entities.enums.UserStatus;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,13 +25,16 @@ public class User implements Serializable {
 
     private Integer userRole;
 
+    private Integer userAdmiredUsers;
+
     public User(){}
 
-    public User(Long id, String name, ContactRule userContactRule, UserRole userRole){
+    public User(Long id, String name, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers){
         this.id = id;
         this.name = name;
         this.userContactRule = userContactRule.getCode();
         this.userRole = userRole.getCode();
+        this.userAdmiredUsers = userAdmiredUsers.getCode();
     }
 
     public Long getId() {
@@ -63,6 +67,14 @@ public class User implements Serializable {
 
     public void setUserRole(UserRole userRole){
         this.userRole = userRole.getCode();
+    }
+
+    public UserStatus getUserAdmiredUsers(){
+        return UserStatus.toEnum(this.userAdmiredUsers);
+    }
+
+    public void setUserAdmiredUsers(UserStatus userAdmiredUsers){
+        this.userAdmiredUsers = userAdmiredUsers.getCode();
     }
 
     @Override
