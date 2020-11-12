@@ -31,6 +31,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Article> articles = new ArrayList<Article>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Rating> ratings = new ArrayList<>();
+
     public User(){}
 
     public User(Long id, String name, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers){
@@ -87,6 +91,14 @@ public class User implements Serializable {
 
     public void setArticles(List<Article> articles) {
         this.articles = articles;
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override

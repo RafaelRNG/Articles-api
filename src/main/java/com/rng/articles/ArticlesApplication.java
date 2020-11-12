@@ -1,12 +1,11 @@
 package com.rng.articles;
 
 import com.rng.articles.entities.Article;
+import com.rng.articles.entities.Rating;
 import com.rng.articles.entities.User;
-import com.rng.articles.entities.enums.ArticleStatus;
-import com.rng.articles.entities.enums.ContactRule;
-import com.rng.articles.entities.enums.UserRole;
-import com.rng.articles.entities.enums.UserStatus;
+import com.rng.articles.entities.enums.*;
 import com.rng.articles.repositories.ArticleRepository;
+import com.rng.articles.repositories.RatingRepository;
 import com.rng.articles.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -14,6 +13,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Arrays;
+import java.util.Date;
 
 @SpringBootApplication
 public class ArticlesApplication implements CommandLineRunner {
@@ -23,6 +23,9 @@ public class ArticlesApplication implements CommandLineRunner {
 
 	@Autowired
 	private ArticleRepository articleRepository;
+
+	@Autowired
+	private RatingRepository ratingRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ArticlesApplication.class, args);
@@ -43,9 +46,15 @@ public class ArticlesApplication implements CommandLineRunner {
 				"<p>Hac mattis maximus viverra dui primis sagittis nulla leo platea, dapibus nisi tellus aliquam metus vivamus dictum quam tristique semper, taciti justo litora faucibus interdum accumsan efficitur tempus. Mi condimentum quisque natoque felis eu habitasse molestie rutrum, sed ultricies dui quam viverra dictum nunc penatibus, neque maximus est ultrices fames efficitur integer. Conubia in sociosqu sodales pellentesque nisl fames fusce, venenatis posuere vehicula pretium porttitor suscipit maecenas rutrum, dictumst auctor aenean purus tristique scelerisque. Purus dui ullamcorper turpis magnis himenaeos eleifend justo habitant cursus parturient, est maecenas malesuada elementum leo fermentum id consequat enim, habitasse netus interdum donec tellus eu mattis tempor facilisis. Curae quisque natoque nisl torquent vestibulum dis blandit vitae, fames nibh scelerisque consectetur vel montes aptent, massa ligula sit eleifend sed ornare dolor. Molestie mi mauris ex luctus curae inceptos himenaeos ornare cubilia a hac etiam tristique facilisis, torquent nam porttitor aliquam finibus nullam sit porta mattis malesuada taciti aenean. Semper vivamus nec lectus porttitor quisque turpis mus quis praesent, gravida sed venenatis massa augue tempor pretium iaculis, tellus dolor duis donec elementum vel aptent mauris.</p>",
 				ArticleStatus.PRIVATE,user1);
 
+		Rating rating1 = new Rating(null, RatingValue.NEUTRAL, new Date(), user1, article1);
+
 		user1.setArticles(Arrays.asList(article1));
+		user1.setRatings(Arrays.asList(rating1));
 		article1.setUser(user1);
+		article1.setRatings(Arrays.asList(rating1));
+
 		userRepository.save(user1);
 		articleRepository.save(article1);
+		ratingRepository.save(rating1);
 	}
 }

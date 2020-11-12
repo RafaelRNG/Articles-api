@@ -5,6 +5,8 @@ import com.rng.articles.entities.enums.ArticleStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -22,8 +24,13 @@ public class Article implements Serializable {
 
     private Integer articleStatus;
 
+    @JsonIgnore
     @ManyToOne
     private User user;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "article")
+    private List<Rating> ratings = new ArrayList<>();
 
     public Article(){}
 
@@ -73,6 +80,14 @@ public class Article implements Serializable {
 
     public void setArticleStatus(ArticleStatus articleStatus){
         this.articleStatus = articleStatus.getCode();
+    }
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     @Override
