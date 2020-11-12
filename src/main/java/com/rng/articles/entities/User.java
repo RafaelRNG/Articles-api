@@ -1,14 +1,14 @@
 package com.rng.articles.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rng.articles.entities.enums.ContactRule;
 import com.rng.articles.entities.enums.UserRole;
 import com.rng.articles.entities.enums.UserStatus;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -26,6 +26,10 @@ public class User implements Serializable {
     private Integer userRole;
 
     private Integer userAdmiredUsers;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<Article> articles = new ArrayList<Article>();
 
     public User(){}
 
@@ -75,6 +79,14 @@ public class User implements Serializable {
 
     public void setUserAdmiredUsers(UserStatus userAdmiredUsers){
         this.userAdmiredUsers = userAdmiredUsers.getCode();
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 
     @Override
