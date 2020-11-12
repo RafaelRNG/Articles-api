@@ -28,7 +28,7 @@ public class User implements Serializable {
     private Integer userAdmiredUsers;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Article> articles = new ArrayList<Article>();
 
     public User(){}

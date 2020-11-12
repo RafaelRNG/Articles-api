@@ -1,6 +1,7 @@
 package com.rng.articles.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rng.articles.entities.enums.ArticleStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,15 +20,19 @@ public class Article implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String text;
 
+    private Integer articleStatus;
+
     @ManyToOne
     private User user;
 
     public Article(){}
 
-    public Article(Long id, String title, String text) {
+    public Article(Long id, String title, String text, ArticleStatus articleStatus, User user) {
         this.id = id;
         this.title = title;
         this.text = text;
+        this.articleStatus = articleStatus.getCode();
+        this.user = user;
     }
 
     public Long getId() {
@@ -60,6 +65,14 @@ public class Article implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ArticleStatus getArticleStatus(){
+        return ArticleStatus.toEnum(this.articleStatus);
+    }
+
+    public void setArticleStatus(ArticleStatus articleStatus){
+        this.articleStatus = articleStatus.getCode();
     }
 
     @Override
