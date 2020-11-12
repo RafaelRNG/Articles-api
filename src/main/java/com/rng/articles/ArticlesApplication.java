@@ -2,10 +2,12 @@ package com.rng.articles;
 
 import com.rng.articles.entities.Article;
 import com.rng.articles.entities.Rating;
+import com.rng.articles.entities.Review;
 import com.rng.articles.entities.User;
 import com.rng.articles.entities.enums.*;
 import com.rng.articles.repositories.ArticleRepository;
 import com.rng.articles.repositories.RatingRepository;
+import com.rng.articles.repositories.ReviewRepository;
 import com.rng.articles.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,6 +29,9 @@ public class ArticlesApplication implements CommandLineRunner {
 	@Autowired
 	private RatingRepository ratingRepository;
 
+	@Autowired
+	private ReviewRepository reviewRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ArticlesApplication.class, args);
 	}
@@ -34,6 +39,8 @@ public class ArticlesApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception{
 
 		User user1 = new User(null, "Rafael", ContactRule.ALL_USERS, UserRole.ADMIN, UserStatus.ACTIVE);
+		User user2 = new User(null, "Neves", ContactRule.NETWORK_ONLY, UserRole.ARTICLE_REVIEWER, UserStatus.PENDING);
+
 
 		Article article1 = new Article(null, "comprar pizza", "<p>Lo" +
 				"\n" +
@@ -48,13 +55,17 @@ public class ArticlesApplication implements CommandLineRunner {
 
 		Rating rating1 = new Rating(null, RatingValue.NEUTRAL, new Date(), user1, article1);
 
+		Review review1 = new Review(null, new Date(), "Sobre a pizza", "<p>Lorem ipsum dolor sit amet consectetur adipiscing elit pretium justo, convallis facilisi eleifend eget est vivamus suspendisse dui nullam, magnis lacinia nunc pellentesque accumsan lacus praesent aliquam. Erat fames eros iaculis facilisis molestie hendrerit mattis, ex placerat leo metus nascetur nullam, et aliquet duis condimentum vehicula feugiat. Auctor metus cras pellentesque mus sapien lorem, blandit morbi nisi nam ornare lobortis, at lectus eleifend ullamcorper non. Facilisi nisi dis habitasse montes dolor fames, hendrerit condimentum porttitor congue nascetur tempus, dignissim tellus mollis urna vestibulum. Tellus varius aliquam sapien venenatis fermentum diam bibendum blandit mauris ligula, imperdiet dapibus purus commodo laoreet sed vel odio sodales interdum, eu suscipit risus lacus fames mi eros libero primis. Ante cubilia ullamcorper volutpat mi amet laoreet habitant dapibus sagittis aenean vel nunc, feugiat curabitur bibendum pellentesque aliquam viverra fames vulputate integer torquent.</p>", user2, article1);
+
 		user1.setArticles(Arrays.asList(article1));
 		user1.setRatings(Arrays.asList(rating1));
+		user2.setReviews(Arrays.asList(review1));
 		article1.setUser(user1);
 		article1.setRatings(Arrays.asList(rating1));
 
-		userRepository.save(user1);
+		userRepository.saveAll(Arrays.asList(user1, user2));
 		articleRepository.save(article1);
 		ratingRepository.save(rating1);
+		reviewRepository.save(review1);
 	}
 }

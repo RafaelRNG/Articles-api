@@ -32,6 +32,10 @@ public class Article implements Serializable {
     @OneToMany(mappedBy = "article")
     private List<Rating> ratings = new ArrayList<>();
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "article")
+    private List<Review> reviews = new ArrayList<>();
+
     public Article(){}
 
     public Article(Long id, String title, String text, ArticleStatus articleStatus, User user) {
@@ -88,6 +92,14 @@ public class Article implements Serializable {
 
     public void setRatings(List<Rating> ratings) {
         this.ratings = ratings;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @Override
