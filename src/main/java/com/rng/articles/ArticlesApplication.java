@@ -1,14 +1,8 @@
 package com.rng.articles;
 
-import com.rng.articles.entities.Article;
-import com.rng.articles.entities.Rating;
-import com.rng.articles.entities.Review;
-import com.rng.articles.entities.User;
+import com.rng.articles.entities.*;
 import com.rng.articles.entities.enums.*;
-import com.rng.articles.repositories.ArticleRepository;
-import com.rng.articles.repositories.RatingRepository;
-import com.rng.articles.repositories.ReviewRepository;
-import com.rng.articles.repositories.UserRepository;
+import com.rng.articles.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -40,7 +34,6 @@ public class ArticlesApplication implements CommandLineRunner {
 
 		User user1 = new User(null, "Rafael", ContactRule.ALL_USERS, UserRole.ADMIN, UserStatus.ACTIVE);
 		User user2 = new User(null, "Neves", ContactRule.NETWORK_ONLY, UserRole.ARTICLE_REVIEWER, UserStatus.PENDING);
-
 
 		Article article1 = new Article(null, "comprar pizza", "<p>Lo" +
 				"\n" +
