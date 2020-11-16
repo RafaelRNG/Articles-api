@@ -3,6 +3,7 @@ package com.rng.articles.controllers;
 import com.rng.articles.entities.User;
 import com.rng.articles.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -19,6 +20,18 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> findAll(){
         return ResponseEntity.ok(userService.findAll());
+    }
+
+    @GetMapping(path = "/page")
+    public ResponseEntity<Page<User>> pagination(
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name ="linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(name = "orderBy", defaultValue = "name") String orderBy,
+            @RequestParam(name = "direction", defaultValue = "ASC") String direction){
+
+        Page<User> users = userService.pagination(page, linesPerPage, orderBy, direction);
+
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping(path = "/{id}")

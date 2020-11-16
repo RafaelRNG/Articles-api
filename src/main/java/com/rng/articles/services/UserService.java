@@ -4,6 +4,9 @@ import com.rng.articles.entities.User;
 import com.rng.articles.repositories.UserRepository;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +19,13 @@ public class UserService {
 
     public List<User> findAll(){
         return userRepository.findAll();
+    }
+
+    public Page<User> pagination(Integer page, Integer linesPerPage, String orderBy, String direction){
+
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+
+        return userRepository.findAll(pageRequest);
     }
 
     public User findById(Long id){
