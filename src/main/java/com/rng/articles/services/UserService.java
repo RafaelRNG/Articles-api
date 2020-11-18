@@ -1,5 +1,6 @@
 package com.rng.articles.services;
 
+import com.rng.articles.dto.UserDTO;
 import com.rng.articles.entities.User;
 import com.rng.articles.repositories.UserRepository;
 import com.rng.articles.services.exception.ObjectNotFoundException;
@@ -45,5 +46,9 @@ public class UserService {
 
     public void deleteById(Long id){
         userRepository.deleteById(id);
+    }
+
+    public User fromDTO(UserDTO userDTO) {
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getUserContactRule(), userDTO.getUserRole(), userDTO.getUserAdmiredUsers());
     }
 }
