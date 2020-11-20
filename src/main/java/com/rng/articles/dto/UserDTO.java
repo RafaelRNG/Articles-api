@@ -14,7 +14,7 @@ public class UserDTO {
     private Long id;
     @NotNull(message = "null values are not allowed")
     @NotEmpty(message = "empty values are not allowed")
-    @Length(min = 5, max = 120, message = "name between 5 and 120 characters is required")
+    @Length(min = 0, max = 120, message = "name between 5 and 120 characters is required")
     private String name;
 
     @NotNull(message = "null values are not allowed")

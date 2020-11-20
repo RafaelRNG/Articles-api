@@ -1,14 +1,15 @@
 package com.rng.articles.controllers;
 
+import com.rng.articles.dto.ReviewDTO;
 import com.rng.articles.entities.Review;
 import com.rng.articles.services.ReviewService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -41,13 +42,15 @@ public class ReviewController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Review review){
+    public ResponseEntity<?> save(@Valid @RequestBody ReviewDTO reviewDTO){
+        Review review = reviewService.fromDTO(reviewDTO);
         reviewService.save(review);
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(review.getId()).toUri()).build();
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody Review review){
+    public ResponseEntity<?> update(@PathVariable Long id, @Valid @RequestBody ReviewDTO reviewDTO){
+        Review review =reviewService.fromDTO(reviewDTO);
         reviewService.update(id, review);
         return ResponseEntity.noContent().build();
     }
