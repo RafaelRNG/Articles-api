@@ -9,7 +9,7 @@ public class RatingDTO {
 
      private Long id;
 
-    @NotNull(message = "null values are not allowed")
+     @NotNull(message = "null values are not allowed")
      private Integer ratingValue;
      private Date ratingTimestamp;
 

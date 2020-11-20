@@ -1,5 +1,6 @@
 package com.rng.articles.controllers;
 
+import com.rng.articles.dto.ArticleDTO;
 import com.rng.articles.entities.Article;
 import com.rng.articles.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -38,14 +40,18 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody Article article){
+    public ResponseEntity<?> save(@Valid @RequestBody ArticleDTO articleDTO){
+        Article article = articleService.fromDTO(articleDTO);
+
         articleService.save(article);
 
         return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(article.getId()).toUri()).build();
     }
 
     @PutMapping(path = "/{id}")
-    public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody Article article){
+    public ResponseEntity<Article> update(@PathVariable Long id, @Valid @RequestBody ArticleDTO articleDTO){
+        Article article = articleService.fromDTO(articleDTO);
+
         articleService.update(id, article);
 
         return ResponseEntity.noContent().build();

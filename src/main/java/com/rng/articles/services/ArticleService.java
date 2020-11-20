@@ -1,6 +1,8 @@
 package com.rng.articles.services;
 
+import com.rng.articles.dto.ArticleDTO;
 import com.rng.articles.entities.Article;
+import com.rng.articles.entities.User;
 import com.rng.articles.repositories.ArticleRepository;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private UserService userService;
 
     public List<Article> findAll(){
         return articleRepository.findAll();
@@ -45,5 +50,11 @@ public class ArticleService {
 
     public void deleteById(Long id){
         articleRepository.deleteById(id);
+    }
+
+    public Article fromDTO(ArticleDTO articleDTO){
+        User user = userService.findById(articleDTO.getUser());
+
+        return new Article(articleDTO.getId(), articleDTO.getTitle(), articleDTO.getText(), articleDTO.getArticleStatus(),user);
     }
 }
