@@ -1,6 +1,9 @@
 package com.rng.articles.services;
 
+import com.rng.articles.dto.RatingDTO;
+import com.rng.articles.entities.Article;
 import com.rng.articles.entities.Rating;
+import com.rng.articles.entities.User;
 import com.rng.articles.repositories.RatingRepository;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +20,12 @@ public class RatingService {
 
     @Autowired
     private RatingRepository ratingRepository;
+
+    @Autowired
+    private ArticleService articleService;
+
+    @Autowired
+    private UserService userService;
 
     public List<Rating> findAll(){
         return ratingRepository.findAll();
@@ -43,8 +53,14 @@ public class RatingService {
         return rating;
     }
 
-
     public void deleteById(Long id){
         ratingRepository.deleteById(id);
+    }
+
+    public Rating fromDTO(RatingDTO ratingDTO){
+        User user = userService.findById(ratingDTO.getUser());
+        Article article = articleService.findById(ratingDTO.getArticle());
+
+        return new Rating(ratingDTO.getId(), ratingDTO.getRatingValue(), new Date(), user, article);
     }
 }

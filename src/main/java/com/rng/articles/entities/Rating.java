@@ -19,12 +19,6 @@ public class Rating implements Serializable {
     private Integer ratingValue;
     private Date ratingTimestamp;
 
-    /*
-    * Futuramente criar uma lógica
-    * onde avalição do usuário é feito
-    * atráves do artigo em que ele postou
-    * e nao feito diretamente diretamente
-    */
     @ManyToOne
     private User user;
 
