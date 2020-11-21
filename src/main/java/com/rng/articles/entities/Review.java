@@ -25,6 +25,7 @@ public class Review implements Serializable {
     @ManyToOne
     private User user;
 
+    @JsonIgnore
     @ManyToOne
     private Article article;
 

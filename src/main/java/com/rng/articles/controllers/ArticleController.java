@@ -1,6 +1,7 @@
 package com.rng.articles.controllers;
 
 import com.rng.articles.dto.ArticleDTO;
+import com.rng.articles.dto.ArticleReturnDTO;
 import com.rng.articles.entities.Article;
 import com.rng.articles.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,8 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<Article> findById(@PathVariable Long id){
-        return ResponseEntity.ok(articleService.findById(id));
+    public ResponseEntity<ArticleReturnDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok(articleService.fromReturnDTO(id));
     }
 
     @PostMapping

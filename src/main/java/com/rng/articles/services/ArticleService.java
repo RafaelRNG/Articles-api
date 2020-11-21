@@ -1,9 +1,12 @@
 package com.rng.articles.services;
 
 import com.rng.articles.dto.ArticleDTO;
+import com.rng.articles.dto.ArticleReturnDTO;
 import com.rng.articles.entities.Article;
+import com.rng.articles.entities.Review;
 import com.rng.articles.entities.User;
 import com.rng.articles.repositories.ArticleRepository;
+import com.rng.articles.repositories.ReviewRepository;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +21,9 @@ public class ArticleService {
 
     @Autowired
     private ArticleRepository articleRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     @Autowired
     private UserService userService;
@@ -56,5 +62,19 @@ public class ArticleService {
         User user = userService.findById(articleDTO.getUser());
 
         return new Article(articleDTO.getId(), articleDTO.getTitle(), articleDTO.getText(), articleDTO.getArticleStatus(),user);
+    }
+
+    public ArticleReturnDTO fromReturnDTO(Long id) {
+        List<Review> reviews = reviewRepository.findByArticleId(id);
+
+        Article article = articleRepository.findById(id).get();
+
+        return new ArticleReturnDTO(
+                article.getId(),
+                article.getTitle(),
+                article.getText(),
+                article.getArticleStatus(),
+                article.getUser(),
+                reviews);
     }
 }

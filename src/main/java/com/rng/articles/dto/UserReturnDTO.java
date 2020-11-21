@@ -7,6 +7,7 @@ import com.rng.articles.entities.enums.ContactRule;
 import com.rng.articles.entities.enums.UserRole;
 import com.rng.articles.entities.enums.UserStatus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserReturnDTO {
@@ -83,11 +84,11 @@ public class UserReturnDTO {
         this.articles = articles;
     }
 
-    public List<Review> getReview() {
+    public List<Review> getReviews() {
         return reviews;
     }
 
-    public void setReview(List<Review> reviews) {
+    public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
 }
