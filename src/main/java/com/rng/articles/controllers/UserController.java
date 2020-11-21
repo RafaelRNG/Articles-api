@@ -1,6 +1,7 @@
 package com.rng.articles.controllers;
 
 import com.rng.articles.dto.UserDTO;
+import com.rng.articles.dto.UserReturnDTO;
 import com.rng.articles.entities.User;
 import com.rng.articles.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ public class UserController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id){
-        return ResponseEntity.ok(userService.findById(id));
+    public ResponseEntity<UserReturnDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok(userService.userReturnDTO(id));
     }
 
     @PostMapping

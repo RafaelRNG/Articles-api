@@ -1,5 +1,7 @@
 package com.rng.articles.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -19,6 +21,7 @@ public class Review implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String reviewBody;
 
+    @JsonIgnore
     @ManyToOne
     private User user;
 
