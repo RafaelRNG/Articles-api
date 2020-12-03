@@ -8,8 +8,11 @@ import com.rng.articles.entities.User;
 import com.rng.articles.repositories.ArticleRepository;
 import com.rng.articles.repositories.ReviewRepository;
 import com.rng.articles.repositories.UserRepository;
+import com.rng.articles.services.exception.DataIntegratyException;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -57,7 +60,13 @@ public class UserService {
     }
 
     public void deleteById(Long id){
-        userRepository.deleteById(id);
+        try{
+            userRepository.deleteById(id);
+        } catch(DataIntegrityViolationException e){
+            throw new DataIntegratyException("It is not possible to exclude because there is a relationship");
+        } catch(EmptyResultDataAccessException e){
+            throw new ObjectNotFoundException("Object not found, ID: " + id);
+        }
     }
 
     public User fromDTO(UserDTO userDTO) {
@@ -69,7 +78,7 @@ public class UserService {
 
         List<Review> reviews = reviewRepository.findByUserId(id);
 
-        User user = userRepository.findById(id).get();
+        User user = this.findById(id);
 
         return new UserReturnDTO(user.getId(), user.getName(), user.getUserContactRule(), user.getUserRole(), user.getUserAdmiredUsers(), articles,reviews);
     }

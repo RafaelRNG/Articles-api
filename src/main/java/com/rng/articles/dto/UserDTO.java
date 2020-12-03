@@ -5,25 +5,22 @@ import com.rng.articles.entities.enums.UserRole;
 import com.rng.articles.entities.enums.UserStatus;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UserDTO {
 
     private Long id;
+
     @NotNull(message = "null values are not allowed")
     @NotEmpty(message = "empty values are not allowed")
-    @Length(min = 0, max = 120, message = "name between 5 and 120 characters is required")
+    @Length(min = 0, max = 120, message = "name between 0 and 120 characters is required")
     private String name;
 
-    @NotNull(message = "null values are not allowed")
     private Integer userContactRule;
 
-    @NotNull(message = "null values are not allowed")
     private Integer userRole;
 
-    @NotNull(message = "null values are not allowed")
     private Integer userAdmiredUsers;
 
     public UserDTO(Long id, String name, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers) {
