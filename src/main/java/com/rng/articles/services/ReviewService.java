@@ -7,6 +7,7 @@ import com.rng.articles.entities.User;
 import com.rng.articles.repositories.ReviewRepository;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -53,7 +54,11 @@ public class ReviewService {
     }
 
     public void deleteById(Long id){
-        reviewRepository.deleteById(id);
+        try{
+            reviewRepository.deleteById(id);
+        } catch(EmptyResultDataAccessException e){
+            throw new ObjectNotFoundException("Object not found, ID: " + id);
+        }
     }
 
     public Review fromDTO(ReviewDTO reviewDTO){

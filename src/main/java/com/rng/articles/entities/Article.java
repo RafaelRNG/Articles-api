@@ -29,11 +29,11 @@ public class Article implements Serializable {
     private User user;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Rating> ratings = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "article")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
     private List<Review> reviews = new ArrayList<>();
 
     public Article(){}

@@ -7,8 +7,11 @@ import com.rng.articles.entities.Review;
 import com.rng.articles.entities.User;
 import com.rng.articles.repositories.ArticleRepository;
 import com.rng.articles.repositories.ReviewRepository;
+import com.rng.articles.services.exception.DataIntegratyException;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -55,13 +58,17 @@ public class ArticleService {
     }
 
     public void deleteById(Long id){
-        articleRepository.deleteById(id);
+        try {
+            articleRepository.deleteById(id);
+        }catch(EmptyResultDataAccessException e){
+            throw new ObjectNotFoundException("Object not found, ID: " + id);
+        }
     }
 
     public Article fromDTO(ArticleDTO articleDTO){
         User user = userService.findById(articleDTO.getUser());
 
-        return new Article(articleDTO.getId(), articleDTO.getTitle(), articleDTO.getText(), articleDTO.getArticleStatus(),user);
+        return new Article(articleDTO.getId(), articleDTO.getTitle(), articleDTO.getText(), articleDTO.getArticleStatus(), user);
     }
 
     public ArticleReturnDTO fromReturnDTO(Long id) {

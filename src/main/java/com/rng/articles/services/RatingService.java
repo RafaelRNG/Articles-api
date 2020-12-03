@@ -7,6 +7,7 @@ import com.rng.articles.entities.User;
 import com.rng.articles.repositories.RatingRepository;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
@@ -54,7 +55,11 @@ public class RatingService {
     }
 
     public void deleteById(Long id){
-        ratingRepository.deleteById(id);
+        try{
+            ratingRepository.deleteById(id);
+        } catch(EmptyResultDataAccessException e){
+            throw new ObjectNotFoundException("Object not found, ID: " + id);
+        }
     }
 
     public Rating fromDTO(RatingDTO ratingDTO){

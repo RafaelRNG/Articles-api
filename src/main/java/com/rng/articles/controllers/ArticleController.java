@@ -36,8 +36,9 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<ArticleReturnDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok(articleService.fromReturnDTO(id));
+    public ResponseEntity<Article> findById(@PathVariable Long id){
+
+        return ResponseEntity.ok(articleService.findById(id));
     }
 
     @PostMapping
