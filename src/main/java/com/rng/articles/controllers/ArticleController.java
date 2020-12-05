@@ -6,6 +6,7 @@ import com.rng.articles.entities.Article;
 import com.rng.articles.services.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -35,10 +36,19 @@ public class ArticleController {
          return ResponseEntity.ok(articleService.pagination(page, linesPerPage, direction, orderBy));
     }
 
+    @GetMapping(path = "/search")
+    public ResponseEntity<Page<Article>> search(
+            @RequestParam(name = "title", defaultValue = "") String title,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(name = "direction", defaultValue = "ASC") String direction,
+            @RequestParam(name = "orderBy", defaultValue = "title") String orderBy){
+
+        return ResponseEntity.ok(articleService.search(title, page, linesPerPage, direction, orderBy));
+    }
+
     @GetMapping(path = "/{id}")
     public ResponseEntity<ArticleReturnDTO> findById(@PathVariable Long id){
-        Article article = articleService.findById(id);
-
 
         return ResponseEntity.ok(articleService.fromReturnDTO(id));
     }

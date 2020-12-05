@@ -41,6 +41,12 @@ public class ArticleService {
         return articleRepository.findAll(pageRequest);
     }
 
+    public Page<Article> search(String title, Integer page, Integer linesPerPage, String direction, String orderBy){
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+
+        return articleRepository.search(title, pageRequest);
+    }
+
     public Article findById(Long id){
         return articleRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Object not found, ID: " + id));
     }

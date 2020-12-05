@@ -32,9 +32,18 @@ public class UserController {
             @RequestParam(name = "orderBy", defaultValue = "name") String orderBy,
             @RequestParam(name = "direction", defaultValue = "ASC") String direction){
 
-        Page<User> users = userService.pagination(page, linesPerPage, orderBy, direction);
+        return ResponseEntity.ok(userService.pagination(page, linesPerPage, orderBy, direction));
+    }
 
-        return ResponseEntity.ok(users);
+    @GetMapping(path = "/search")
+    public ResponseEntity<Page<User>> search(
+            @RequestParam(name = "name", defaultValue = "") String name,
+            @RequestParam(name = "page", defaultValue = "0") Integer page,
+            @RequestParam(name = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+            @RequestParam(name = "orderBy", defaultValue = "name") String orderBy,
+            @RequestParam(name = "direction", defaultValue = "ASC") String direction){
+
+        return ResponseEntity.ok(userService.search(name, page, linesPerPage, direction, orderBy));
     }
 
     @GetMapping(path = "/{id}")
