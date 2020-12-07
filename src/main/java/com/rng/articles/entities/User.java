@@ -22,6 +22,8 @@ public class User implements Serializable {
     private Long id;
     private String name;
 
+    private String email;
+
     private Integer userContactRule;
 
     private Integer userRole;
@@ -42,9 +44,10 @@ public class User implements Serializable {
 
     public User(){}
 
-    public User(Long id, String name, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers){
+    public User(Long id, String name, String email, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers){
         this.id = id;
         this.name = name;
+        this.email = email;
         this.userContactRule = userContactRule.getCode();
         this.userRole = userRole.getCode();
         this.userAdmiredUsers = userAdmiredUsers.getCode();
@@ -64,6 +67,14 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public ContactRule getUserContactRule(){

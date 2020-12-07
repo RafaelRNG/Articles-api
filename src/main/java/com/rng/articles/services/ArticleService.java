@@ -7,6 +7,7 @@ import com.rng.articles.entities.Review;
 import com.rng.articles.entities.User;
 import com.rng.articles.repositories.ArticleRepository;
 import com.rng.articles.repositories.ReviewRepository;
+import com.rng.articles.services.email.EmailService;
 import com.rng.articles.services.exception.DataIntegratyException;
 import com.rng.articles.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class ArticleService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private EmailService emailService;
+
     public List<Article> findAll(){
         return articleRepository.findAll();
     }
@@ -52,6 +56,7 @@ public class ArticleService {
     }
 
     public void save(Article article){
+        emailService.sendConfirmationEmail(article);
         articleRepository.save(article);
     }
 

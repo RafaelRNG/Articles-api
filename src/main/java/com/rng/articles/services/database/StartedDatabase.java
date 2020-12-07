@@ -31,8 +31,8 @@ public class StartedDatabase {
     private ReviewRepository reviewRepository;
 
     public void insertDados(){
-        User user1 = new User(null, "Rafael", ContactRule.ALL_USERS, UserRole.ADMIN, UserStatus.ACTIVE);
-        User user2 = new User(null, "Neves", ContactRule.NETWORK_ONLY, UserRole.ARTICLE_REVIEWER, UserStatus.PENDING);
+        User user1 = new User(null, "Rafael","rafael.gomila@hotmail.com" , ContactRule.ALL_USERS, UserRole.ADMIN, UserStatus.ACTIVE);
+        User user2 = new User(null, "Neves", "neves@email.com",ContactRule.NETWORK_ONLY, UserRole.ARTICLE_REVIEWER, UserStatus.PENDING);
 
         Article article1 = new Article(null, "comprar pizza", "<p>Lo" +
                 "\n" +

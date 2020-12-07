@@ -5,6 +5,7 @@ import com.rng.articles.entities.enums.UserRole;
 import com.rng.articles.entities.enums.UserStatus;
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -17,15 +18,19 @@ public class UserDTO {
     @Length(min = 0, max = 120, message = "name between 0 and 120 characters is required")
     private String name;
 
+    @Email(message = "Invalid e-mail")
+    private String email;
+
     private Integer userContactRule;
 
     private Integer userRole;
 
     private Integer userAdmiredUsers;
 
-    public UserDTO(Long id, String name, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers) {
+    public UserDTO(Long id, String name, String email, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.userContactRule = userContactRule.getCode();
         this.userRole = userRole.getCode();
         this.userAdmiredUsers = userAdmiredUsers.getCode();
@@ -45,6 +50,14 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public ContactRule getUserContactRule(){

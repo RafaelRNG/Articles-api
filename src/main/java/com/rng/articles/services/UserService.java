@@ -77,7 +77,7 @@ public class UserService {
     }
 
     public User fromDTO(UserDTO userDTO) {
-        return new User(userDTO.getId(), userDTO.getName(), userDTO.getUserContactRule(), userDTO.getUserRole(), userDTO.getUserAdmiredUsers());
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail(), userDTO.getUserContactRule(), userDTO.getUserRole(), userDTO.getUserAdmiredUsers());
     }
 
     public UserReturnDTO userReturnDTO(Long id){
@@ -87,6 +87,6 @@ public class UserService {
 
         User user = this.findById(id);
 
-        return new UserReturnDTO(user.getId(), user.getName(), user.getUserContactRule(), user.getUserRole(), user.getUserAdmiredUsers(), articles,reviews);
+        return new UserReturnDTO(user.getId(), user.getName(), user.getEmail(), user.getUserContactRule(), user.getUserRole(), user.getUserAdmiredUsers(), articles,reviews);
     }
 }

@@ -16,6 +16,8 @@ public class UserReturnDTO {
 
     private String name;
 
+    private String email;
+
     private Integer userContactRule;
 
     private Integer userRole;
@@ -26,9 +28,10 @@ public class UserReturnDTO {
 
     private List<Review> reviews;
 
-    public UserReturnDTO(Long id, String name, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers, List<Article> articles, List<Review> reviews) {
+    public UserReturnDTO(Long id, String name, String email, ContactRule userContactRule, UserRole userRole, UserStatus userAdmiredUsers, List<Article> articles, List<Review> reviews) {
         this.id = id;
         this.name = name;
+        this.email = email;
         this.userContactRule = userContactRule.getCode();
         this.userRole = userRole.getCode();
         this.userAdmiredUsers = userAdmiredUsers.getCode();
@@ -50,6 +53,14 @@ public class UserReturnDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public ContactRule getUserContactRule(){

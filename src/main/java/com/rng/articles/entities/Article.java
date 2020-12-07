@@ -5,6 +5,7 @@ import com.rng.articles.entities.enums.ArticleStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -113,5 +114,14 @@ public class Article implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("Article ");
+        sb.append("\t title= '").append(getTitle());
+        sb.append("\n \t text= '").append(getText());
+        sb.append("\n \t status of your article= ").append(getArticleStatus());
+        return sb.toString();
     }
 }
